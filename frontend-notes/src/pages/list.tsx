@@ -16,7 +16,6 @@ export default function List() {
 	const [nameNewNote, setNameNewNote] = useState('')
 	const [inputIsFocused, setInputIsFocused] = useState(false);
 
-
 	const handleOnKeyDown = async (e: React.KeyboardEvent<HTMLInputElement>) => {
 		if (e.code == 'Enter' && nameNewNote != '') {
 			const newNote = await createNote(nameNewNote, idList as UUID)
@@ -31,11 +30,16 @@ export default function List() {
 	}
 
 	const handleDeleteNote = async (idNote: UUID) => {
-		const data = await deleteNote(idNote);
-		const updatedNotes = notes?.filter(note => note.idNote !== idNote);
-
-		setNotes(updatedNotes);
+		try {
+			await deleteNote(idNote);
+			const updatedNotes = notes?.filter(note => note.idNote !== idNote);
+			setNotes(updatedNotes);
+		} catch (error) {
+			console.error("Erro ao excluir a nota:", error);
+			window.alert("Erro ao excluir a nota.")
+		}
 	}
+	
 
 	useEffect(() => {
 		setNotes(selectedList?.notes)

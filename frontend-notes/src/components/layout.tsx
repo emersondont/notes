@@ -8,8 +8,13 @@ export default function Layout({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     const fetchLists = async () => {
-      const lists: ListType[] = await getAllLists();
-      setLists(lists);
+      try {
+        const lists: ListType[] = await getAllLists();
+        setLists(lists);
+      } catch (error) {
+        console.error("Erro ao buscar as listas:", error);
+        window.alert("Erro ao buscar as listas.")
+      }
     };
 
     fetchLists();

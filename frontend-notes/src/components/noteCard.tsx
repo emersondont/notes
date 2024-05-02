@@ -26,54 +26,66 @@ export default function NoteCard(props: Props) {
 	const { hideCompleted } = useContext(AppContext);
 
 	const handleUpdateDescription = async () => {
-		if (props.note.description != description) {
-			const updatedNote: NoteType = { ...props.note };
-			updatedNote.description = description;
+		if (props.note.description !== description) {
+			try {
+				const updatedNote: NoteType = { ...props.note };
+				updatedNote.description = description;
 
-			await updateNote(updatedNote);
+				await updateNote(updatedNote);
+			} catch (error) {
+				console.error("Erro ao atualizar a descrição da nota:", error);
+				window.alert("Erro ao atualizar a descrição da nota.")
+			}
 		}
+
 	}
 
 	const handleCheckNote = async () => {
-		const updatedIsChecked = !isChecked
-		const updatedNote: NoteType = { ...props.note };
+		try {
+			const updatedIsChecked = !isChecked;
+			const updatedNote: NoteType = { ...props.note };
+			updatedNote.isChecked = updatedIsChecked;
 
-		updatedNote.isChecked = updatedIsChecked;
-
-		await updateNote(updatedNote);
-		setIsChecked(updatedIsChecked)
+			await updateNote(updatedNote);
+			setIsChecked(updatedIsChecked);
+		} catch (error) {
+			console.error("Erro ao atualizar o check da nota:", error);
+			window.alert("Erro ao atualizar o check da nota.")
+		}
 	}
 
 	const handleOnKeyDown = async (e: React.KeyboardEvent<HTMLInputElement>) => {
-		if (e.code == 'Escape') {
-			setName(props.note.name)
-			inputRef.current?.blur()
+		if (e.code === 'Escape') {
+			setName(props.note.name);
+			inputRef.current?.blur();
+		} else if (e.code === 'Enter') {
+			try {
+				const updatedNote: NoteType = { ...props.note };
+				updatedNote.name = name;
+
+				await updateNote(updatedNote);
+
+				inputRef.current?.blur();
+			} catch (error) {
+				console.error("Erro ao atualizar o nome da nota:", error);
+				window.alert("Erro ao atualizar o nome da nota.")
+			}
 		}
-		else if (e.code == 'Enter') {
-			const updatedNote: NoteType = { ...props.note };
-			updatedNote.name = name;
-
-			await updateNote(updatedNote);
-
-			inputRef.current?.blur()
-		}
 	}
 
-	const handleOpenOptions = () => {
-		setOpenOptions(!openOptions)
-	}
-
-	const handleDeleteList = async () => {
-		await props.handleDeleteNote(props.note.idNote)
-	}
 
 	useEffect(() => {
 		const handleUpdateDate = async () => {
 			if ((!props.note.date && date) || (props.note.date != date)) {
-				const updatedNote: NoteType = { ...props.note };
-				updatedNote.date = date;
+				try {
+					const updatedNote: NoteType = { ...props.note };
+					updatedNote.date = date;
 
-				await updateNote(updatedNote);
+					await updateNote(updatedNote);
+				} catch (error) {
+					console.error("Erro ao atualizar a data da nota:", error);
+					window.alert("Erro ao atualizar a data da nota.")
+				}
 			}
 		};
 
@@ -90,7 +102,6 @@ export default function NoteCard(props: Props) {
 								<CheckSquare size={24} /> :
 								<Square size={24} />
 						}
-
 					</Button>
 
 					<input
@@ -104,7 +115,7 @@ export default function NoteCard(props: Props) {
 						onKeyDown={(e) => handleOnKeyDown(e)}
 					/>
 
-					<Button onClick={handleOpenOptions} >
+					<Button onClick={() => setOpenOptions(!openOptions)} >
 						<CaretDown
 							size={24}
 							className={`${openOptions && 'rotate-180'}`}
@@ -154,7 +165,7 @@ export default function NoteCard(props: Props) {
 							{/* button delete */}
 							<Button
 								className='text-red-500'
-								onClick={handleDeleteList}
+								onClick={() => props.handleDeleteNote(props.note.idNote)}
 							>
 								<span>Apagar</span>
 								<TrashSimple size={24} />
