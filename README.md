@@ -18,3 +18,12 @@ Este é um projeto pessoal e simples, desenvolvido como parte do meu processo de
 - Visualizar, editar e excluir tarefas existentes.
 - Marcar tarefas como concluídas.
 - Filtrar tarefas por status (pendentes/concluídas).
+
+## Screenshots
+
+Aqui estão algumas capturas de tela da aplicação:
+![Img 1](screenshots/Captura%20de%20tela%20de%202024-05-02%2015-55-29.png) 
+![Img 2](screenshots/Captura%20de%20tela%20de%202024-05-02%2015-55-40.png)
+![Img 3](screenshots/Captura%20de%20tela%20de%202024-05-02%2015-55-55.png)
+![Img 4](screenshots/Captura%20de%20tela%20de%202024-05-02%2015-56-30.png)
+![Img 5](screenshots/Captura%20de%20tela%20de%202024-05-02%2015-58-00.png)
