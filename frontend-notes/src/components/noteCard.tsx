@@ -83,7 +83,7 @@ export default function NoteCard(props: Props) {
 	return (
 		(hideCompleted && !isChecked) || !hideCompleted ? (
 			<div className="w-2/3 bg-primary rounded-lg p-2 flex flex-col gap-3 shadow-md">
-				<div className={`flex gap-1 text-text2 items-center text-opacity-${isChecked ? '50' : '100'} duration-200 ease-out`}>
+				<div className={`flex gap-1 text-text2 items-center ${isChecked ? 'text-opacity-50' : 'text-opacity-100'} duration-200 ease-out`}>
 					<Button onClick={() => { handleCheckNote() }}>
 						{
 							isChecked ?
